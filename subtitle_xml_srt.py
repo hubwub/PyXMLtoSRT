@@ -18,18 +18,18 @@ span_sentence = None
 has_span = False
 latter = None
 
-for d in soup.findAll('div'):
-	for pro in d.findAll('p'):
+for div_tag in soup.findAll('div'):
+	for p_tag in div_tag.findAll('p'):
 		
-		srt += str(int(pro.get('id')[1:])+1) + '\n'
-		srt += "%s --> %s\n" % (parse_time(pro.get('begin')), parse_time(pro.get('end')))
+		srt += str(int(p_tag.get('id')[1:])+1) + '\n'
+		srt += "%s --> %s\n" % (parse_time(p_tag.get('begin')), parse_time(p_tag.get('end')))
 
-		for s in pro.findAll('span'):
-			span_sentence = s.text
+		for span_tag in p_tag.findAll('span'):
+			span_sentence = span_tag.text
 			srt += "<i>" + span_sentence + "</i>"
 			has_span = True
 
-		pt = pro.text
+		pt = p_tag.text
 
 		if has_span is True:
 			latter = pt.replace(span_sentence, '')
